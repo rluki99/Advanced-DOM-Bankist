@@ -9,6 +9,9 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 
 const openModal = e => {
   e.preventDefault();
@@ -33,20 +36,32 @@ document.addEventListener('keydown', e => {
 });
 
 // button scrolling
-
 btnScrollTo.addEventListener('click', () => {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 // page navigation with event delegation
-
 document.querySelector('.nav__links').addEventListener('click', e => {
-  e.preventDefault()
+  e.preventDefault();
 
   if (e.target.classList.contains('nav__link')) {
-    const id = e.target.getAttribute('href')
-    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// tab component
+tabsContainer.addEventListener('click', e => {
+  const clicked = e.target.closest('.operations__tab');
+
+  if (!clicked) return;
+
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  tabsContent.forEach(cont => cont.classList.remove('operations__content--active'))
+
+  clicked.classList.add('operations__tab--active');
+
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
 });
 
 ///////////////////////////////////////////////////////////////////////
@@ -202,4 +217,33 @@ document.querySelector('.nav__links').addEventListener('click', e => {
 // document.querySelector('.nav').addEventListener('click', function (e) {
 //   this.style.backgroundColor = randomColor();
 //   console.log('Nav', e.target, e.currentTarget);
+// });
+
+// const h1 = document.querySelector('h1');
+
+// // going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'orangered';
+
+// // going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// // going sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(el => {
+//   if (el !== h1) {
+//     el.style.transform = 'scale(0.5)';
+//   }
 // });
